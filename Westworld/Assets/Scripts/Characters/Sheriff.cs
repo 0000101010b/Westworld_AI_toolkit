@@ -3,6 +3,16 @@ using UnityEngine;
 
 public class Sheriff : Agent
 {
+    public delegate void SeeOutlaw();
+    public static event SeeOutlaw onOutlawSeen;
+
+    public void OutlawSpotted()
+    {
+        if (onOutlawSeen != null)
+        {
+            onOutlawSeen();
+        }
+    }
 
     public TextMesh text;
     public scaleSpeech ss;

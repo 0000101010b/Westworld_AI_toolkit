@@ -25,8 +25,13 @@ public class Undertaker : Agent
     public int waitedTime = 0;
     public int createdTime = 0;
 
+    public GameObject deadBody;
+    public bool pickedUpBody;
+
     public override void Awake()
     {
+        pickedUpBody = false;
+
         isStart = true;
         GameObject g = GameObject.Find(eLocation.Undertakers.ToString());
 
@@ -35,23 +40,27 @@ public class Undertaker : Agent
         g.GetComponent<Location>().agents.Add((int)eAgent.Undertaker);
 
         transform.position = new Vector3(pos.x, 2.0f, pos.y);
+
+        EnableCollectDead();
+
         this.stateMachine = new StateMachine<Undertaker>();
         this.stateMachine.Init(this, AtUndertakersState.Instance, UndertakerGlobalState.Instance);
     }
 
-
-    public void someoneDead(GameObject deadAgent)
+    void EnableCollectDead()
     {
-        //collect dead body
+      
+        Agent.onDead += CollectDeadBody;
+    }
+    void DisableCollectDead()
+    {
+        Agent.onDead -= CollectDeadBody;
     }
 
-    public void enableCollectDead()
+    public void CollectDeadBody(GameObject _deadBody)
     {
-        Agent.onDead += someoneDead;
-    }
-    public void disableCooking()
-    {
-        Agent.onDead += someoneDead;
+        this.deadBody = _deadBody;
+        this.ChangeState(CollectBodyState.Instance);
     }
 
     public void IncreaseWaitedTime(int amount)

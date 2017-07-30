@@ -4,7 +4,6 @@ using System.Collections;
 
 public class Outlaw : Agent
 {
-   
 
     public TextMesh text;
     public scaleSpeech ss;

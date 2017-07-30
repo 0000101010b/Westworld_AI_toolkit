@@ -22,7 +22,6 @@ public class Bob : Agent {
         eatenStew = true;
         CreateSpeechBubble("Great stew");
     }
-
     public void enableEat()
     {
         Elsa.onCookedStew += EatStew;

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
+
+
 abstract public class Agent :MonoBehaviour {
 
 
@@ -13,9 +15,14 @@ abstract public class Agent :MonoBehaviour {
     {
         if (onDead != null)
         {
+            Debug.Log(this.gameObject);
             onDead(this.gameObject);
         }
     }
+    //sense parameters
+    public float sightDist;
+
+
     public int id;
     public bool pathFound;
     public Vector2 pos;
@@ -37,11 +44,27 @@ abstract public class Agent :MonoBehaviour {
         }
     }
 
+    public RaycastHit[][] Sight()
+    {
+        Transform t = transform.gameObject.transform;
+        Vector3 pos = t.position;
+        RaycastHit[][] hits = new RaycastHit[4][];
+
+        Debug.DrawRay(pos, -t.forward*10.0f);
+        hits[0] = Physics.RaycastAll(pos, t.forward, sightDist);
+        hits[1] = Physics.RaycastAll(pos, -t.forward, sightDist);
+        hits[2] = Physics.RaycastAll(pos, -t.right, sightDist);
+        hits[3] = Physics.RaycastAll(pos, t.right, sightDist);
+
+        return hits;
+    }
+
+
     public List<Point> aStar()
     {
         GameObject g=GameObject.Find("Westworld");
 
-        WestWorld1 script = g.GetComponent<WestWorld1>();
+        WestWorld script = g.GetComponent<WestWorld>();
         int width = script.width;
         int height = script.height;
         bool[,] grid = script.grid;
