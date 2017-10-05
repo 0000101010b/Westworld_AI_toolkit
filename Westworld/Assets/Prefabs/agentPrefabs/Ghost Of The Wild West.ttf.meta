@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 7ef510ca59191f54fb4aab8e626adb30
+timeCreated: 1506694861
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Ghost Of The Wild West
+  fontNames:
+  - Ghost Of The Wild West
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

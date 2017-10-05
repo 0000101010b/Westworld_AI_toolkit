@@ -87,10 +87,29 @@ public class Bob : Agent {
         this.stateMachine.ChangeState(state);
     }
 
+    public float count = 0;
+    public Vector3 newPos;
+    public Vector3 oldPos;
+    public override void Update()
+    {
+        if (count > 1)
+        {
+            transform.position = newPos;
+            this.stateMachine.Update();
+            oldPos = newPos;
+            newPos = new Vector3(pos.x,0.5f, pos.y);
+            count = 0;
+        }
+
+        transform.position = Vector3.Lerp(oldPos, newPos, count);
+        count += 0.1f;
+    }
+
+    /*
     public int count = 0;
     public override void Update()
     {
-        if (count < 1)//movement and update
+        if (count < 5)//movement and update
             count++;
         else
         {
@@ -98,7 +117,7 @@ public class Bob : Agent {
             this.stateMachine.Update();
             count = 0;
         }
-   }
+   }*/
 
     public void CreateSpeechBubble(string str)
     {

@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class scaleSpeech : MonoBehaviour
-{
-
+public class scaleSpeech : MonoBehaviour { 
 
     public int len;
 
@@ -14,6 +12,7 @@ public class scaleSpeech : MonoBehaviour
     void Start()
     {
         FixSpeechBubble();
+        
     }
 
     // Update is called once per frame
@@ -28,6 +27,7 @@ public class scaleSpeech : MonoBehaviour
         string str = text.text;
 
         Vector3 s = transform.localScale;
+
         if (str.Length < len)
         {
             s.x = w * str.Length;
@@ -37,7 +37,7 @@ public class scaleSpeech : MonoBehaviour
         else
         {
             s.x = w * len;
-            s.y = h * ((str.Length % len) + 1);
+            s.y = h * ((str.Length % len) + 5);
 
             char[] c = new char[500];
 

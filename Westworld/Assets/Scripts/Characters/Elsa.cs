@@ -88,11 +88,11 @@ public class Elsa : Agent
     public int count = 0;
     public override void Update()
     {
-        if (count < 1)//movement and update
+        if (count < 5)//movement and update
             count++;
         else
         {
-            transform.position = new Vector3(pos.x, 1.0f, pos.y);
+            transform.position = new Vector3(pos.x, 0.5f, pos.y);
             this.stateMachine.Update();
             count = 0;
         }

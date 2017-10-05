@@ -21,6 +21,8 @@ public class GoHomeState : State<Bob>
     {
         index = 0;
         GameObject g = GameObject.Find(eLocation.Shack.ToString());
+
+        Debug.Log("GameObject:"+g);
         agent.toLoc = new Vector2(g.transform.position.x, g.transform.position.z);
         agent.path = agent.aStar();
 

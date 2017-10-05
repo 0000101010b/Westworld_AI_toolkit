@@ -49,7 +49,7 @@ public class SheriffGlobalState : State<Sheriff>
                 RaycastHit hit = hits[i][j];
                 if (hit.transform.gameObject.name == eAgent.OutlawJesse.ToString()+"(Clone)")
                 {
-                    agent.CreateSpeechBubble("I See You !!!!!!!Jesse James...");
+                    agent.CreateSpeechBubble("I See You !!!!!!! Jesse James...");
                     Debug.Log("I See You !!!!!!! Jesse James..." );
 
                 }

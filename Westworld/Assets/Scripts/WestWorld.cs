@@ -45,6 +45,7 @@ public class WestWorld : MonoBehaviour {
 
     [Header("Tiles")]
     public GameObject tilePrefab;
+    public GameObject mountainPrefab;
     public List<Color> tileColors;
     public List<Material> tileMaterials;
     private GameObject tiles;
@@ -83,7 +84,7 @@ public class WestWorld : MonoBehaviour {
 
         for (int i = 0; i < locationPrefabs.Count; i++)
         {
-            GameObject g = Instantiate(locationPrefabs[i], new Vector3(loc[i].x, 1, loc[i].y), Quaternion.identity) as GameObject;
+            GameObject g = Instantiate(locationPrefabs[i], new Vector3(loc[i].x, 0.5f, loc[i].y), Quaternion.identity) as GameObject;
             g.transform.parent = locParent.transform;
             g.name = ((eLocation)i).ToString();
             g.AddComponent<Location>();
@@ -96,9 +97,8 @@ public class WestWorld : MonoBehaviour {
         //Create Agents
         for (int i = 0; i < agentPrefabs.Count; i++)
         {
-            GameObject g = Instantiate(agentPrefabs[i], new Vector3( 0,1,0), Quaternion.identity) as GameObject;
+            GameObject g = Instantiate(agentPrefabs[i], new Vector3( 0,0.5f,0), Quaternion.identity) as GameObject;
             g.transform.parent = agentParent.transform;
-            //g.GetComponent<Agent>().pos = loc[(int)agentLoc[i]];
         }
         #endregion
     }
@@ -138,19 +138,19 @@ public class WestWorld : MonoBehaviour {
         {
             for (int z = 0; z < height; z++)
             {
-                SetMaterial(x, z);
+                bool isTile=SetMaterial(x, z);
 
                 Vector3 pos = new Vector3(0, 0, 0);
                 pos.x = x + start.x;
                 pos.z = z + start.z;
-
-                SpawnPrefab(pos);
+                if (isTile) SpawnPrefab(tilePrefab, pos);
+                else SpawnPrefab(mountainPrefab, pos);
             }
         }
         #endregion
     }
  
-    private void SetMaterial(int x, int y)
+    private bool SetMaterial(int x, int y)
     {
         MeshRenderer gRenderer = tilePrefab.GetComponent<MeshRenderer>();
 
@@ -170,12 +170,14 @@ public class WestWorld : MonoBehaviour {
             name = "unwalkable";
         }
         gRenderer.material = m;
+
+        return grid[x, y];
     }
 
     #region leanpool
-    public void SpawnPrefab(Vector3 pos)
+    public void SpawnPrefab(GameObject prefab,Vector3 pos)
     {
-        var clone = Lean.LeanPool.Spawn(tilePrefab, pos, tilePrefab.transform.rotation, null);
+        var clone = Lean.LeanPool.Spawn(prefab, pos, prefab.transform.rotation, null);
         clone.name = name;
 
         clone.transform.parent = tiles.transform;
